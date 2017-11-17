@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from user_assets.models import Asset, AssetGroup
 
-if django.VERSION >= (1, 9):
+if django.VERSION >= (1, 10):
     from django.urls import reverse
 else:
     from django.core.urlresolvers import reverse
