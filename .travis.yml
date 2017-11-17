@@ -3,36 +3,44 @@ language: python
 matrix:
   fast_finish: true
   include:
-    - env: TOX_ENV=py33-django-18
-      python: 3.3
-    - env: TOX_ENV=py34-django-18
-      python: 3.4
-    - env: TOX_ENV=py35-django-18
-      python: 3.5
-    - env: TOX_ENV=py36-django-18
-      python: 3.6
-    - env: TOX_ENV=py34-django-19
-      python: 3.4
-    - env: TOX_ENV=py35-django-19
-      python: 3.5
-    - env: TOX_ENV=py36-django-19
-      python: 3.6
-    - env: TOX_ENV=py34-django-110
-      python: 3.4
-    - env: TOX_ENV=py35-django-110
-      python: 3.5
-    - env: TOX_ENV=py36-django-110
-      python: 3.6
-    - env: TOX_ENV=py34-django-111
-      python: 3.4
-    - env: TOX_ENV=py35-django-111
-      python: 3.5
-    - env: TOX_ENV=py36-django-111
-      python: 3.6
+  - env: TOX_ENV=py33-django-18
+    python: 3.3
+  - env: TOX_ENV=py34-django-18
+    python: 3.4
+  - env: TOX_ENV=py35-django-18
+    python: 3.5
+  - env: TOX_ENV=py36-django-18
+    python: 3.6
+  - env: TOX_ENV=py34-django-19
+    python: 3.4
+  - env: TOX_ENV=py35-django-19
+    python: 3.5
+  - env: TOX_ENV=py36-django-19
+    python: 3.6
+  - env: TOX_ENV=py34-django-110
+    python: 3.4
+  - env: TOX_ENV=py35-django-110
+    python: 3.5
+  - env: TOX_ENV=py36-django-110
+    python: 3.6
+  - env: TOX_ENV=py34-django-111
+    python: 3.4
+  - env: TOX_ENV=py35-django-111
+    python: 3.5
+  - env: TOX_ENV=py36-django-111
+    python: 3.6
 
 install: pip install -r requirements_test.txt
 
 script: tox -e $TOX_ENV
+
+deploy:
+  provider: pypi
+  user: ar7n
+  password:
+    secure: WK/QQLI/WKWYQECVQwcYhkLCMOz/h9gDKCN4HDgM1MGsJqz0CyXeX4bI/DW73HPbGPa4z1zr7i3m4sAI543iSPcFitWK7EteIeDf10wJSEUDzmMW5QCjJ8dWHNMlszgqkxIRMtftm5GwyE2XmiEg4t4DAwR37WWXCjYRFzofBACbPBG3e1qLJNpQj7QXxZxo936DXdyWiDD9Lyy97MtAzNV4XBMyccE+/oHywkiOHhO9H1aqg9suBprFZT+heu5NCDvEqsAJ+Ciadzyu9Tb5UCuu0FJSb/3G8i+tZpIVJm9NPU+/Se3/3ZHOWCsht4sGCwxS/0Pj5CsFXdLniKlmzrtKyuMxnz6XOAdEmimkH5Gy6SyMDzk64PJGN17ZLXrDZ4LlrxN2OtX7jwDziKOw9s05r5aMlyD/3IhG6eBRAW2zF1tVkeM1oVy80CgV3trsD3edGcXF7gIwHaZL07YWe4bGkG8GdgOAcN/ONVc6BqgtieLpFfqm45SQC3UIjO7vIvXmaXn6XqvbDgDCej1NcEqvR4Q2fAImOtG3tzWdv6uRv07GG/aehU7gZQhOrZ1DUfS2/Bcaw5krdhGtYjD5q/UQxjphxVd1BhJK4noAvkXjlrdBl8SZ5AhYtM5fax0OZX11YcnCy0l+6OctSnVuqEqcOcr3e5buudBuTlKpUrM=
+  on:
+    tags: true
 
 after_success:
   - codecov -e TOX_ENV
