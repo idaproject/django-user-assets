@@ -1,8 +1,12 @@
+import django
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.urls import reverse
-
 from user_assets.models import Asset, AssetGroup
+
+if django.VERSION >= (1, 9):
+    from django.urls import reverse
+else:
+    from django.core.urlresolvers import reverse
 
 
 class TestAssetGroupAdmin(TestCase):
