@@ -11,6 +11,6 @@ def add_assets(request):
     )).all()
     for group in groups:
         if len(group.asset_set.all()):
-            group_content = ''.join([asset.content for asset in group.asset_set.all()])
+            group_content = '\n'.join([asset.content for asset in group.asset_set.all()])
             context['user_assets'][group.key] = group_content
     return context

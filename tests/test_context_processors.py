@@ -40,7 +40,9 @@ class TestAddAssets(TestCase):
                                        published=True, order=1)
         request = self.factory.get('/')
         context = add_assets(request)
-        self.assertEqual(context, {'user_assets': {group.key: asset_2.content + asset_1.content}})
+        self.assertEqual(context, {'user_assets': {
+            group.key: asset_2.content + '\n' + asset_1.content
+        }})
 
     def test_num_queries(self):
         group_1 = AssetGroup.objects.create(name='Test', key='test')
