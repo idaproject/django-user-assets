@@ -15,14 +15,14 @@ class TestAddAssets(TestCase):
     def test_without_assets(self):
         request = self.factory.get('/')
         context = add_assets(request)
-        self.assertEqual(context, {})
+        self.assertEqual(context, {'user_assets': {}})
 
     def test_with_unpublished_asset(self):
         group = AssetGroup.objects.create(name='Test', key='test')
         Asset.objects.create(name='Test', content='test content', group=group, published=False)
         request = self.factory.get('/')
         context = add_assets(request)
-        self.assertEqual(context, {})
+        self.assertEqual(context, {'user_assets': {}})
 
     def test_with_one_asset(self):
         group = AssetGroup.objects.create(name='Test', key='test')
@@ -30,7 +30,7 @@ class TestAddAssets(TestCase):
                                      published=True)
         request = self.factory.get('/')
         context = add_assets(request)
-        self.assertEqual(context, {group.key: asset.content})
+        self.assertEqual(context, {'user_assets': {group.key: asset.content}})
 
     def test_asset_order(self):
         group = AssetGroup.objects.create(name='Test', key='test')
@@ -40,7 +40,7 @@ class TestAddAssets(TestCase):
                                        published=True, order=1)
         request = self.factory.get('/')
         context = add_assets(request)
-        self.assertEqual(context, {group.key: asset_2.content + asset_1.content})
+        self.assertEqual(context, {'user_assets': {group.key: asset_2.content + asset_1.content}})
 
     def test_num_queries(self):
         group_1 = AssetGroup.objects.create(name='Test', key='test')
