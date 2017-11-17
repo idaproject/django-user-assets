@@ -48,3 +48,5 @@ docs/_build
 
 env
 *.sqlite3
+
+.pypirc
