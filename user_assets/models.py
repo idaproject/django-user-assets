@@ -22,6 +22,8 @@ class Asset(models.Model):
     name = models.CharField('Название', max_length=100)
     group = models.ForeignKey(AssetGroup, verbose_name='Группа кодов',
                               on_delete=models.deletion.CASCADE)
+    site = models.ForeignKey(Site, verbose_name='Сайт', on_delete=models.CASCADE, blank=True,
+                             null=True)
     content = models.TextField('Контент')
     order = models.PositiveIntegerField(default=0, db_index=True)
     published = models.BooleanField('Опубликован', default=False, db_index=True)

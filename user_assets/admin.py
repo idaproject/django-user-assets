@@ -19,4 +19,6 @@ class AssetGroupAdmin(ModelAdmin):
 
 @register(Asset)
 class AssetAdmin(SortableAdminMixin, ModelAdmin):
-    pass
+    list_display = ('name', 'group', 'site', 'published')
+    search_fields = ('name',)
+    list_filter = ('group', 'site', 'published')

@@ -8,9 +8,11 @@ def add_assets(request):
     filter_expression = Q(site=None)
     if hasattr(request, 'site'):
         filter_expression |= Q(site=request.site)
+    prefetch = Prefetch('asset_set',
+                        queryset=Asset.objects.filter(filter_expression, published=True))
     groups = AssetGroup.objects\
         .filter(filter_expression) \
-        .prefetch_related(Prefetch('asset_set', queryset=Asset.objects.filter(published=True)))
+        .prefetch_related(prefetch)
     for group in groups:
         if len(group.asset_set.all()):
             group_content = '\n'.join([asset.content for asset in group.asset_set.all()])

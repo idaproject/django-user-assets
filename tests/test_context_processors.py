@@ -31,14 +31,27 @@ class TestAddAssets(TestCase):
         context = add_assets(request)
         self.assertEqual(context, {'user_assets': {group.key: asset.content}})
 
-    def test_with_one_site_asset(self):
+    def test_with_site_group_asset(self):
         site_1 = Site.objects.get(id=1)
         site_2 = Site.objects.create(name='example2.com', domain='example2.com')
         group_1 = AssetGroup.objects.create(name='Test', key='test', site=site_1)
         Asset.objects.create(name='Test', content='test content', group=group_1, published=True)
         group_2 = AssetGroup.objects.create(name='Test', key='test', site=site_2)
         asset_2 = Asset.objects.create(name='Test', content='test content', group=group_2,
-                                     published=True)
+                                       published=True)
+        request = self.factory.get('/')
+        request.site = site_2
+        context = add_assets(request)
+        self.assertEqual(context, {'user_assets': {group_2.key: asset_2.content}})
+
+    def test_with_site_asset(self):
+        site_1 = Site.objects.get(id=1)
+        site_2 = Site.objects.create(name='example2.com', domain='example2.com')
+        group_1 = AssetGroup.objects.create(name='Test', key='test', site=site_1)
+        Asset.objects.create(name='Test', content='test content', group=group_1, published=True)
+        group_2 = AssetGroup.objects.create(name='Test', key='test')
+        asset_2 = Asset.objects.create(name='Test', content='test content', group=group_2,
+                                       published=True, site=site_2)
         request = self.factory.get('/')
         request.site = site_2
         context = add_assets(request)
@@ -64,5 +77,3 @@ class TestAddAssets(TestCase):
         request = self.factory.get('/')
         with self.assertNumQueries(2):
             add_assets(request)
-
-
