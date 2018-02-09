@@ -1,14 +1,16 @@
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 
 from .models import AssetGroup, Asset
 
 
 def add_assets(request):
     context = {'user_assets': {}}
-    groups = AssetGroup.objects.prefetch_related(Prefetch(
-        'asset_set',
-        queryset=Asset.objects.filter(published=True)
-    )).all()
+    filter_expression = Q(site=None)
+    if hasattr(request, 'site'):
+        filter_expression |= Q(site=request.site)
+    groups = AssetGroup.objects\
+        .filter(filter_expression) \
+        .prefetch_related(Prefetch('asset_set', queryset=Asset.objects.filter(published=True)))
     for group in groups:
         if len(group.asset_set.all()):
             group_content = '\n'.join([asset.content for asset in group.asset_set.all()])

@@ -31,27 +31,18 @@ Add it to your `INSTALLED_APPS`:
 
     INSTALLED_APPS = (
         ...
+        'django.contrib.sites',
+        ...
         'user_assets.apps.UserAssetsConfig',
         ...
     )
 
-Add Django User Assets's URL patterns:
-
-.. code-block:: python
-
-    from user_assets import urls as user_assets_urls
-
-
-    urlpatterns = [
-        ...
-        url(r'^', include(user_assets_urls)),
-        ...
-    ]
-
 Features
 --------
 
-* TODO
+1. Add different assets (script, style, e.t.c) to your site from admin panel
+2. Place your assets to any place on page with Asset Groups
+3. Attach your assets to specific sites from Django Sites Framework
 
 Running Tests
 -------------
