@@ -10,7 +10,7 @@ class AssetInlineAdmin(SortableInlineAdminMixin, TabularInline):
 
 
 @register(AssetGroup)
-class AssetGroupAdmin(ModelAdmin):
+class AssetGroupAdmin(SortableAdminMixin, ModelAdmin):
     inlines = (AssetInlineAdmin,)
     list_display = ('name', 'key', 'site')
     search_fields = ('name',)
