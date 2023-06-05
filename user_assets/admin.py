@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
+from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin, SortableAdminBase
 from django.contrib.admin import register, ModelAdmin, TabularInline
 
 from .models import Asset, AssetGroup
@@ -10,7 +10,7 @@ class AssetInlineAdmin(SortableInlineAdminMixin, TabularInline):
 
 
 @register(AssetGroup)
-class AssetGroupAdmin(ModelAdmin):
+class AssetGroupAdmin(SortableAdminBase, ModelAdmin):
     inlines = (AssetInlineAdmin,)
     list_display = ('name', 'key', 'site')
     search_fields = ('name',)
